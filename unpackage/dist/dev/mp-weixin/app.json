@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/tabbar/index",
+    "pages/tabbar/mypage"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/tabbar/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/tabbar/mypage",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
