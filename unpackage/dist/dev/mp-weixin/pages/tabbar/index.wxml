@@ -1,1 +1,1 @@
-<view> index </view>
+<view> index <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}" duration="{{1000}}"><swiper-item><image src="{{a}}"></image></swiper-item><swiper-item><image src="{{b}}"></image></swiper-item></swiper></view>
