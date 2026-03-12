@@ -9,46 +9,91 @@
 #### hbuilder创建
 
 选择默认模板和vue3
-小程序工具开启服务端口
+小程序工具需开启服务端口
 可选择窗口分离
+手机调试需id
+
+#### 命令行创建
+
+// cmd
+npx degit dcloudio/uni-preset-vue#vite-ts _
+cd _
+npm i # 安装依赖
+npm run dev:mp-weixin # 编译小程序
+
+小程序工具导入dist目录
+
+##### vscode适配
+
+// 插件
+uni-create-view // 创建页面
+uni-helper // uni提示
+uniapp小程序扩展
+
+// 配置
+"files.associations": {
+"\*.json": "jsonc" // 允许注释
+}
+npx prettier --write . --list-different # 格式化全部代码
+
+##### ts适配
+
+// cmd
+npm i -D @types/wechat-miniprogram @uni-helper/uni-app-types
+
+// tsconfig.json
+"types": [
+"@dcloudio/types",
+"@types/wechat-miniprogram",
+"@uni-helper/uni-app-types"
+]
 
 ### 目录结构
+
 uniapp
-├pages						页面文件目录
-│└index
-│ └index.vue
-├static						静态资源目录
-├unpackage					编译资源目录
-├App.vue 					vue根文件
-├index.html					挂载文件
-├main.js					入口文件
-├manifest.json				打包配置文件
-├pages.json					页面配置文件
+├pages 页面文件目录
+├static 静态资源目录
+├unpackage 编译资源目录
+├App.vue vue根文件
+├index.html 挂载文件
+├main.js 入口文件
+├manifest.json 打包配置文件
+├pages.json 页面配置文件
 ├uni.promisify.adaptor.js
-└uni.scss					常用变量样式
+└uni.scss 常用变量样式
 
 ### pages.json配置
 
 {
-	"pages": [ // 路由及页面配置
-		{
-			"path": "页面路径",
-			"style": {
-				"navigationBarTitleText": "标题内容"
-			}
-		}
-	],
-	"tabBar": {
-		{
-			"pagePath": "底栏路径",
-			"text": "底栏标题"
-		}
-	},
-	"globalStyle": { // 默认配置
-		"navigationBarTextStyle": "标题颜色",
-		"navigationBarTitleText": "标题内容",
-		"navigationBarBackgroundColor": "标题背景",
-		"backgroundColor": "背景颜色"
-	},
-	"uniIdRouter": {} // uniid路由
+"pages": [ // 路由及页面配置，第一个路由为入口
+{
+"path": "页面路径",
+"style": {
+"navigationBarTitleText": "标题内容"
 }
+}
+],  
+"tabBar": { // 底栏配置，路径需在pages注册，至少需要俩个
+"selectedColor": "选中标题颜色",
+{
+"pagePath": "底栏路径",
+"text": "底栏标题"
+"iconPath": "图标"
+"selectedIconPath": "选中图标"
+}
+},
+"globalStyle": { // 默认配置
+"navigationBarTextStyle": "标题颜色",
+"navigationBarTitleText": "标题内容",
+"navigationBarBackgroundColor": "标题背景",
+"backgroundColor": "背景颜色"
+},
+"uniIdRouter": {} // uniid路由
+}
+
+### 杂项
+
+uni.previewImage({ // 小程序大图查看
+urls: [] // 所有大图
+current: url // 当前大图
+})
