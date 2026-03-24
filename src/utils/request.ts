@@ -1,0 +1,72 @@
+import { useMemberStore } from '@/stores'
+
+const BASEURL = 'https://pcapi-xiaotuxian-front-devtest.itheima.net'
+
+const httpconfig = {
+  // 请求拦截器
+  invoke(requestdata: UniApp.RequestOptions) {
+    if (!requestdata.url.startsWith('http'))
+      requestdata.url = BASEURL + requestdata.url
+    // 超时时间
+    requestdata.timeout = 39000
+    // 请求头
+    const token = useMemberStore().profile?.token
+    requestdata.header = {
+      ...requestdata.header,
+      'source-client': 'miniapp',
+      Authorization: token, // token
+    }
+  },
+}
+uni.addInterceptor('request', httpconfig)
+uni.addInterceptor('uploadFile', httpconfig)
+
+const request = (data: any) => {
+  return new Promise((resolve, reject) => {
+    uni.request({
+      ...data,
+      // 响应拦截器
+      success(res: any) {
+        if ((res.statusCode + '').startsWith('2')) return resolve(res.data)
+        if (res.statusCode == 401) {
+          useMemberStore().clearProfile()
+          uni.navigateTo({
+            url: '/pages/login/login',
+          })
+          uni.showToast({
+            title: res.data.msg || '请先登录',
+            icon: 'none',
+          })
+          return reject(res)
+        }
+        uni.showToast({
+          title: res.data.msg || '访问错误',
+          icon: 'none',
+        })
+        reject(res)
+      },
+      fail(err: any) {
+        uni.showToast({
+          title: '网络错误',
+          icon: 'none',
+        })
+        reject(err)
+      },
+    })
+  })
+}
+
+export const get = (url: string, data?: any) => {
+  return request({
+    url,
+    data,
+    method: 'GET',
+  })
+}
+export const post = (url: string, data?: any) => {
+  return request({
+    url,
+    data,
+    method: 'POST',
+  })
+}

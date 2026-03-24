@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getAd } from '@/api/home'
 import { useMemberStore } from '@/stores'
 
 const memberStore = useMemberStore()
@@ -11,6 +12,7 @@ const memberStore = useMemberStore()
       @tap="
         memberStore.setProfile({
           nickname: '黑马先锋',
+          token: '111',
         })
       "
       size="mini"
@@ -21,6 +23,7 @@ const memberStore = useMemberStore()
     <button @tap="memberStore.clearProfile()" size="mini" plain type="warn">
       清理用户信息
     </button>
+    <button @tap="getAd()" size="mini" plain type="warn">请求</button>
   </view>
 </template>
 
