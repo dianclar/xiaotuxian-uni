@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getAd } from '@/api/home'
+import { getbanner } from '@/api/home'
 import { useMemberStore } from '@/stores'
 
 const memberStore = useMemberStore()
@@ -17,13 +17,26 @@ const memberStore = useMemberStore()
       "
       size="mini"
       plain
-      type="primary">
+      type="primary"
+    >
       保存用户信息
     </button>
-    <button @tap="memberStore.clearProfile()" size="mini" plain type="warn">
+    <button
+      @tap="memberStore.clearProfile()"
+      size="mini"
+      plain
+      type="warn"
+    >
       清理用户信息
     </button>
-    <button @tap="getAd()" size="mini" plain type="warn">请求</button>
+    <button
+      @tap="getbanner()"
+      size="mini"
+      plain
+      type="warn"
+    >
+      请求
+    </button>
   </view>
 </template>
 

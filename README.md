@@ -18,8 +18,8 @@
 // cmd
 npx degit dcloudio/uni-preset-vue#vite-ts _
 cd _
-npm i # 安装依赖
-npm run dev:mp-weixin # 编译小程序
+pnpm i # 安装依赖
+pnpm run dev:mp-weixin # 编译小程序
 
 小程序工具导入 dist 目录
 
@@ -39,8 +39,8 @@ npx prettier --write . --list-different # 格式化全部代码
 ##### ts 适配
 
 // cmd
-npm i -D @types/wechat-miniprogram @uni-helper/uni-app-types
-npm i -D @uni-helper/uni-ui-types
+pnpm i -D @types/wechat-miniprogram @uni-helper/uni-app-types
+pnpm i -D @uni-helper/uni-ui-types
 
 // tsconfig.json
 "types": [
@@ -71,6 +71,8 @@ uniapp
 {
 "path": "页面路径",
 "style": {
+"navigationStyle": "导航栏显隐",
+"navigationBarTextStyle": "状态栏颜色",
 "navigationBarTitleText": "标题内容"
 }
 }
@@ -96,13 +98,13 @@ uniapp
 ### 配置组件库
 
 // cmd
-npm i @dcloudio/uni-ui
+pnpm i @dcloudio/uni-ui
 
 // pages.json
 "easycom": {
 "autoscan": true,
 "custom": {
-"^uni-(.\*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+"^uni-(.\*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue" // 自动引入组件规则
 }
 },
 
@@ -120,9 +122,15 @@ uni.setStorageSync(key, value)
 },
 },
 
-### 杂项
+### api
 
-uni.previewImage({ // 小程序大图查看
+#### 小程序大图查看
+
+uni.previewImage({
 urls: [] // 所有大图
 current: url // 当前大图
 })
+
+#### 获取安全区域
+
+const { safeAreaInsets } = uni.getSystemInfoSync()

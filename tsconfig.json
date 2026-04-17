@@ -10,8 +10,9 @@
     "lib": ["esnext", "dom"],
     "types": [
       "@dcloudio/types",
-      "miniprogram-api-typings",
+      "@types/wechat-miniprogram",
       "@uni-helper/uni-app-types",
+      "miniprogram-api-typings",
       "@uni-helper/uni-ui-types"
     ]
   },

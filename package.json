@@ -80,6 +80,7 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-4070620250821001",
     "@rushstack/eslint-patch": "^1.1.4",
     "@types/node": "^18.11.9",
+    "@types/wechat-miniprogram": "^3.4.10",
     "@uni-helper/uni-app-types": "1.0.0-alpha.6",
     "@uni-helper/uni-ui-types": "1.0.0-alpha.6",
     "@vue/eslint-config-prettier": "^7.0.0",

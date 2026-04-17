@@ -56,17 +56,23 @@ const request = (data: any) => {
   })
 }
 
-export const get = (url: string, data?: any) => {
+type Response<T> = {
+  code: number
+  msg: string
+  result: T
+}
+
+export const get = <T>(url: string, data?: any) => {
   return request({
     url,
     data,
     method: 'GET',
-  })
+  }) as Promise<Response<T>>
 }
-export const post = (url: string, data?: any) => {
+export const post = <T>(url: string, data?: any) => {
   return request({
     url,
     data,
     method: 'POST',
-  })
+  }) as Promise<Response<T>>
 }
