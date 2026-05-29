@@ -32,8 +32,16 @@ const getmore = () => {
   })
 }
 
+const resetdata = () => {
+  requestdata.value.page = 1
+  getinfomore(requestdata.value).then(res => {
+    list.value = res.result.items
+  })
+}
+
 defineExpose({
   getmore,
+  resetdata,
 })
 </script>
 
@@ -125,6 +133,7 @@ defineExpose({
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
   }
   .price {

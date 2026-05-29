@@ -1,10 +1,13 @@
 <script setup lang="ts">
 //
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
 import CustomNavbar from './components/CustomNavbar.vue'
 import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
-import { onLoad } from '@dcloudio/uni-app'
+import XtxGuess from '@/components/XtxGuess.vue'
+import pageske from './components/pageske.vue'
+
 import {
   getbanner,
   type BannerItem,
@@ -13,14 +16,13 @@ import {
   gethot,
   type HotItem,
 } from '@/api/home'
-import XtxGuess from '@/components/XtxGuess.vue'
 
 const bannerList = ref<BannerItem[]>([])
 const navList = ref<CategoryItem[]>([])
 const hotList = ref<HotItem[]>([])
 
 onLoad(() => {
-  refreshernow()
+  getdata()
 })
 
 const guess = ref<InstanceType<typeof XtxGuess>>()
@@ -30,15 +32,21 @@ const onlower = () => {
 }
 
 const refresherstatus = ref(false)
-const refreshernow = () => {
-  getbanner().then(res => {
-    bannerList.value = res.result
-  })
-  getnav().then(res => {
-    navList.value = res.result
-  })
-  gethot().then(res => {
-    hotList.value = res.result
+const getdata = async () => {
+  refresherstatus.value = true
+  guess.value?.resetdata()
+  Promise.all([
+    getbanner().then(res => {
+      bannerList.value = res.result
+    }),
+    getnav().then(res => {
+      navList.value = res.result
+    }),
+    gethot().then(res => {
+      hotList.value = res.result
+    }),
+  ]).then(() => {
+    refresherstatus.value = false
   })
 }
 </script>
@@ -52,15 +60,19 @@ const refreshernow = () => {
     refresher-enabled
     :refresher-triggered="refresherstatus"
     @scrolltolower="onlower"
-    @refresherrefresh="refreshernow"
+    @refresherrefresh="getdata"
   >
-    <!-- 轮播图 -->
-    <XtxSwiper :list="bannerList" />
-    <!-- 导航 -->
-    <category-panel :list="navList" />
-    <!-- 推荐> -->
-    <HotPanel :list="hotList" />
-    <!-- 信息流 -->
+    <!-- 骨架屏 -->
+    <pageske v-if="refresherstatus" />
+    <template v-else>
+      <!-- 轮播图 -->
+      <XtxSwiper :list="bannerList" />
+      <!-- 导航 -->
+      <category-panel :list="navList" />
+      <!-- 推荐> -->
+      <HotPanel :list="hotList" />
+      <!-- 信息流 -->
+    </template>
     <xtx-guess ref="guess" />
   </scroll-view>
 </template>

@@ -6,6 +6,7 @@
     "url": "https://web.itheima.com/"
   },
   "scripts": {
+    "dev": "uni -p mp-weixin",
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",
     "dev:app-ios": "uni -p app-ios",
@@ -49,6 +50,7 @@
     ]
   },
   "dependencies": {
+    "@climblee/uv-ui": "^1.1.20",
     "@dcloudio/uni-app": "3.0.0-4070620250821001",
     "@dcloudio/uni-app-harmony": "3.0.0-4070620250821001",
     "@dcloudio/uni-app-plus": "3.0.0-4070620250821001",

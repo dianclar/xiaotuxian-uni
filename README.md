@@ -134,3 +134,7 @@ current: url // 当前大图
 #### 获取安全区域
 
 const { safeAreaInsets } = uni.getSystemInfoSync()
+
+#### 获取骨架屏
+
+导航栏=>页面信息=>生成骨架屏
