@@ -45,7 +45,7 @@ export const getdata = (
   d?: {
     page: number
     pageSize: number
-    subType: string
+    subType?: string
   }
 ) => {
   return get<HotResult>(url, d)

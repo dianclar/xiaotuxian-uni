@@ -1,4 +1,3 @@
-// /src/pages/hot/hot.vue
 <script setup lang="ts">
 import { getdata } from '@/api/recommend'
 import { onLoad } from '@dcloudio/uni-app'
@@ -15,15 +14,44 @@ const prop = defineProps<{ type: string }>()
 const item = hotMap.find(item => item.type === prop.type)
 uni.setNavigationBarTitle({ title: item!.title })
 
-const data = ref<HotResult>()
+const data = ref<
+  HotResult & {
+    subTypes: (HotResult['subTypes'][number] & { more: boolean })[] 
+  }
+>()
 onLoad(() => {
-  getdata(item!.url).then(res => {
-    data.value = res.result
+  getdata(item!.url, { page: 31, pageSize: 10 }).then(res => {
+    data.value = {
+      ...res.result,
+      subTypes: res.result.subTypes.map(i => ({ ...i, more: true })),
+    }
     console.log(data.value)
   })
 })
 
 const subTypeact = ref(0)
+
+const onlower = () => {
+  const nowpage = data.value?.subTypes[subTypeact.value]
+  if (nowpage!.goodsItems.page >= nowpage!.goodsItems.pages) {
+    nowpage!.more = false
+    return uni.showToast({
+      title: '没有了',
+      icon: 'none',
+    })
+  }
+  nowpage!.goodsItems.page++
+  getdata(item!.url, {
+    subType: nowpage!.id,
+    page: nowpage!.goodsItems.page,
+    pageSize: nowpage!.goodsItems.pageSize,
+  }).then(res => {
+    nowpage!.goodsItems.items = [
+      ...nowpage!.goodsItems.items,
+      ...res.result.subTypes[subTypeact.value].goodsItems.items,
+    ]
+  })
+}
 </script>
 
 <template>
@@ -50,7 +78,7 @@ const subTypeact = ref(0)
       v-for="(i, index) in data?.subTypes"
       :key="i.id"
       v-show="index == subTypeact"
-      @scrolltolower=""
+      @scrolltolower="onlower"
     >
       <view class="goods">
         <navigator
@@ -71,7 +99,7 @@ const subTypeact = ref(0)
           </view>
         </navigator>
       </view>
-      <view class="loading-text">正在加载...</view>
+      <view class="loading-text">{{ i.more ? '加载中...' : '没有了' }}</view>
     </scroll-view>
   </view>
 </template>
