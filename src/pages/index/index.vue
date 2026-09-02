@@ -1,6 +1,6 @@
 <script setup lang="ts">
 //
-import { ref, nextTick } from 'vue'
+import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import CustomNavbar from './components/CustomNavbar.vue'
 import CategoryPanel from './components/CategoryPanel.vue'

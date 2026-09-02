@@ -1,16 +1,19 @@
 /* eslint-env node */
 require('@rushstack/eslint-patch/modern-module-resolution')
+// Node.js 环境
 
 module.exports = {
-  root: true,
+  root: true, // 使用当前配置
+
   extends: [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    '@vue/eslint-config-typescript',
-    '@vue/eslint-config-prettier',
+    // 配置整体规则
+    'plugin:vue/vue3-essential' //  Vue3 规则,
+    'eslint:recommended', //  ESLint 规则
+    'prettier', // Prettier 规则
   ],
-  // 小程序全局变量
+
   globals: {
+    // 排除未定义变量
     uni: true,
     wx: true,
     WechatMiniprogram: true,
@@ -23,23 +26,12 @@ module.exports = {
     Component: true,
     AnyObject: true,
   },
+
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 'latest', // 使用最新es语法规则
   },
+
   rules: {
-    'prettier/prettier': [
-      'warn',
-      {
-        singleQuote: true,
-        semi: false,
-        printWidth: 100,
-        trailingComma: 'all',
-        endOfLine: 'auto',
-      },
-    ],
-    'vue/multi-word-component-names': ['off'],
-    'vue/no-setup-props-destructure': ['off'],
-    'vue/no-deprecated-html-element-is': ['off'],
-    '@typescript-eslint/no-unused-vars': ['off'],
+    // 配置具体规则
   },
 }
