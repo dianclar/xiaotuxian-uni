@@ -1,5 +1,6 @@
 import { type PageResult, get, post } from '@/utils/request'
 import type { HotResult } from '@/types/recommend'
+export type * from '@/types/recommend'
 
 // 特惠推荐
 export const getdata = (

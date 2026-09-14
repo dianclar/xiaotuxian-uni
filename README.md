@@ -122,7 +122,7 @@ uni.setStorageSync(key, value)
 },
 },
 
-### api
+### uni 小知识
 
 #### 小程序大图查看
 
@@ -138,3 +138,8 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
 #### 获取骨架屏
 
 导航栏=>页面信息=>生成骨架屏
+
+#### 页面传参
+
+onLoad 方法可以接受 url 参数，pages.json 里注册的页面才有 onLoad 方法
+pages.json 里注册的页面的 defineProps 方法也可以接受 url 参数

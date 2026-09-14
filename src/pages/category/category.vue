@@ -3,6 +3,7 @@ import { getbanner, type BannerItem } from '@/api/home'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { getCategoryTop, type CategoryTopItem } from '@/api/category'
+import pageske from './components/pageske.vue'
 
 onLoad(() => {
   getData()
@@ -10,18 +11,27 @@ onLoad(() => {
 
 const bannerList = ref<BannerItem[]>([])
 const categoryTop = ref<CategoryTopItem[]>([])
+const refresherstatus = ref(true)
 const getData = () => {
-  getbanner({ distributionSite: 2 }).then(
-    res => (bannerList.value = res.result)
-  )
-  getCategoryTop().then(res => (categoryTop.value = res.result))
+  Promise.all([
+    getbanner({ distributionSite: 2 }).then(
+      res => (bannerList.value = res.result)
+    ),
+    getCategoryTop().then(res => (categoryTop.value = res.result)),
+  ]).then(() => {
+    refresherstatus.value = false
+  })
 }
 
 const activeIndex = ref(0)
 </script>
 
 <template>
-  <view class="viewport">
+  <pageske v-if="refresherstatus" />
+  <view
+    class="viewport"
+    v-else
+  >
     <!-- 搜索框 -->
     <view class="search">
       <view class="input">
@@ -58,11 +68,11 @@ const activeIndex = ref(0)
         <!-- 内容区域 -->
         <view
           class="panel"
-          v-for="item in 3"
-          :key="item"
+          v-for="item in categoryTop[activeIndex].children"
+          :key="item.id"
         >
           <view class="title">
-            <text class="name">宠物用品</text>
+            <text class="name">{{ item.name }}</text>
             <navigator
               class="more"
               hover-class="none"
@@ -71,20 +81,20 @@ const activeIndex = ref(0)
           </view>
           <view class="section">
             <navigator
-              v-for="goods in 4"
-              :key="goods"
+              v-for="goods in item.goods"
+              :key="goods.id"
               class="goods"
               hover-class="none"
-              :url="`/pages/goods/goods?id=`"
+              :url="`/pages/goods/index?id=` + goods.id"
             >
               <image
                 class="image"
-                src="https://yanxuan-item.nosdn.127.net/674ec7a88de58a026304983dd049ea69.jpg"
+                :src="goods.picture"
               ></image>
-              <view class="name ellipsis">木天蓼逗猫棍</view>
+              <view class="name ellipsis">{{ goods.name }}</view>
               <view class="price">
                 <text class="symbol">¥</text>
-                <text class="number">16.00</text>
+                <text class="number">{{ goods.price }}</text>
               </view>
             </navigator>
           </view>

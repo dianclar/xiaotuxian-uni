@@ -45,6 +45,12 @@
 			"style": {
 				"navigationBarTitleText": "推荐"
 			}
+		},
+		{
+			"path": "pages/goods/index",
+			"style": {
+				"navigationBarTitleText": "index"
+			}
 		}
 	],
 	"globalStyle": {

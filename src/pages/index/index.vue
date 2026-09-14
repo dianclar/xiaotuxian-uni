@@ -31,7 +31,7 @@ const onlower = () => {
   guess.value?.getmore()
 }
 
-const refresherstatus = ref(false)
+const refresherstatus = ref(true)
 const getdata = async () => {
   refresherstatus.value = true
   guess.value?.resetdata()
