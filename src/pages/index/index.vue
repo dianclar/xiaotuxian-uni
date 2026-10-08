@@ -7,6 +7,7 @@ import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
 import XtxGuess from '@/components/XtxGuess.vue'
 import pageske from './components/pageske.vue'
+import { useGuessList } from '@/composables/index'
 
 import {
   getbanner,
@@ -25,16 +26,12 @@ onLoad(() => {
   getdata()
 })
 
-const guess = ref<InstanceType<typeof XtxGuess>>()
-
-const onlower = () => {
-  guess.value?.getmore()
-}
+const { guessRef, onScrolltolower } = useGuessList()
 
 const refresherstatus = ref(true)
 const getdata = async () => {
   refresherstatus.value = true
-  guess.value?.resetdata()
+  guessRef.value?.resetdata()
   Promise.all([
     getbanner().then(res => {
       bannerList.value = res.result
@@ -59,7 +56,7 @@ const getdata = async () => {
     style="flex: 1"
     refresher-enabled
     :refresher-triggered="refresherstatus"
-    @scrolltolower="onlower"
+    @scrolltolower="onScrolltolower"
     @refresherrefresh="getdata"
   >
     <!-- 骨架屏 -->
@@ -73,7 +70,7 @@ const getdata = async () => {
       <HotPanel :list="hotList" />
       <!-- 信息流 -->
     </template>
-    <xtx-guess ref="guess" />
+    <xtx-guess ref="guessRef" />
   </scroll-view>
 </template>
 

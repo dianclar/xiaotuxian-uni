@@ -29,13 +29,15 @@ const request = (data: any) => {
       success(res: any) {
         if ((res.statusCode + '').startsWith('2')) return resolve(res.data)
         if (res.statusCode == 401) {
-          useMemberStore().clearProfile()
-          uni.navigateTo({
-            url: '/pages/login/login',
-          })
-          uni.showToast({
-            title: res.data.msg || '请先登录',
-            icon: 'none',
+          uni.showModal({
+            content: '登陆过期，是否重新登录？',
+            success: res => {
+              if (res.cancel) return
+              useMemberStore().clearProfile()
+              uni.navigateTo({
+                url: '/pages/login/login',
+              })
+            },
           })
           return reject(res)
         }
@@ -86,5 +88,12 @@ export const post = <T>(url: string, data?: any) => {
     url,
     data,
     method: 'POST',
+  }) as Promise<Response<T>>
+}
+export const put = <T>(url: string, data?: any) => {
+  return request({
+    url,
+    data,
+    method: 'PUT',
   }) as Promise<Response<T>>
 }

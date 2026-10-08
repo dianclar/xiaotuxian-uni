@@ -122,7 +122,33 @@ uni.setStorageSync(key, value)
 },
 },
 
-### uni 小知识
+### 分包
+
+将资源分为多个包，减少首屏加载时间，预下载分包可提升进入分包页面的速度
+
+#### 配置分包
+
+// pages.json
+"subPackages": [
+{
+"root": "分包路径",
+"pages": [
+"分包页面"
+]
+}
+]
+
+#### 配置预下载
+
+// pages.json
+"preloadRule": {
+"分包页面": {
+network: "all",
+packages: ["分包路径"]
+}
+}
+
+### uni 小技能
 
 #### 小程序大图查看
 
@@ -150,3 +176,7 @@ uni.login()
 
 open-type="getPhoneNumber"
 @getphonenumber="onGetPhoneNumber"
+
+#### 获取图片
+
+uni.chooseMedia()

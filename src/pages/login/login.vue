@@ -1,4 +1,3 @@
-// src/pages/login/login.vue
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app'
