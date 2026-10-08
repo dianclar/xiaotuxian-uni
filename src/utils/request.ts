@@ -47,7 +47,7 @@ const request = (data: any) => {
       },
       fail(err: any) {
         uni.showToast({
-          title: '网络错误',
+          title: '网络错误' + err.errMsg,
           icon: 'none',
         })
         reject(err)

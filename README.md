@@ -143,3 +143,10 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
 
 onLoad 方法可以接受 url 参数，pages.json 里注册的页面才有 onLoad 方法
 pages.json 里注册的页面的 defineProps 方法也可以接受 url 参数
+
+#### 获取手机号
+
+uni.login()
+
+open-type="getPhoneNumber"
+@getphonenumber="onGetPhoneNumber"
