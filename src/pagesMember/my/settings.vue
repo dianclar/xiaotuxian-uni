@@ -27,7 +27,7 @@ const onLogout = () => {
       v-if="memberStore.profile"
     >
       <navigator
-        url="./address/address"
+        url="/pagesMember/address/index"
         hover-class="none"
         class="item arrow"
       >

@@ -97,3 +97,10 @@ export const put = <T>(url: string, data?: any) => {
     method: 'PUT',
   }) as Promise<Response<T>>
 }
+export const del = <T>(url: string, data?: any) => {
+  return request({
+    url,
+    data,
+    method: 'DELETE',
+  }) as Promise<Response<T>>
+}

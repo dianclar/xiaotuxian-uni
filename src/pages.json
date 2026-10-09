@@ -111,6 +111,18 @@
             "navigationBarTextStyle": "white",
             "navigationBarTitleText": "个人信息"
           }
+        },
+        {
+          "path": "address/index",
+          "style": {
+            "navigationBarTitleText": "地址"
+          }
+        },
+        {
+          "path": "address/new",
+          "style": {
+            "navigationBarTitleText": "填写地址"
+          }
         }
       ]
     }

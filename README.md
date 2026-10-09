@@ -11,6 +11,7 @@
 选择默认模板和 vue3
 小程序工具需开启服务端口
 可选择窗口分离
+可选择编译模式
 手机调试需 id
 
 #### 命令行创建
@@ -180,3 +181,25 @@ open-type="getPhoneNumber"
 #### 获取图片
 
 uni.chooseMedia()
+
+#### 动态标题
+
+uni.setNavigationBarTitle({
+title: "标题"
+})
+
+#### 滚动容器
+
+scroll-view
+scroll-y // 允许纵向滚动
+scroll-x // 允许横向滚动
+refresher-enabled // 开启下拉刷新
+:refresher-triggered="" // 下拉刷新状态
+@scrolltolower="" // 滚动到底部时
+@refresherrefresh="" // 下拉刷新时
+
+#### 侧滑菜单
+
+uni-swipe-action
+uni-swipe-action-item 
+template #right // 侧滑菜单内容
