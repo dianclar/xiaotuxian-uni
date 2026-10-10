@@ -1,35 +1,44 @@
 // AddressPanel.vue
 <script setup lang="ts">
-//
+import { ref } from 'vue'
+defineProps(['addressList'])
+
+const selectAddress = ref()
 </script>
 
 <template>
   <view class="address-panel">
     <!-- 关闭按钮 -->
-    <text class="close icon-close" @tap="$emit('close')"></text>
+    <text
+      class="close icon-close"
+      @tap="$emit('close')"
+    ></text>
     <!-- 标题 -->
     <view class="title">配送至</view>
     <!-- 内容 -->
     <view class="content">
-      <view class="item">
-        <view class="user">李明 13824686868</view>
-        <view class="address">北京市顺义区后沙峪地区安平北街6号院</view>
-        <text class="icon icon-checked"></text>
-      </view>
-      <view class="item">
-        <view class="user">王东 13824686868</view>
-        <view class="address">北京市顺义区后沙峪地区安平北街6号院</view>
-        <text class="icon icon-ring"></text>
-      </view>
-      <view class="item">
-        <view class="user">张三 13824686868</view>
-        <view class="address">北京市朝阳区孙河安平北街6号院</view>
-        <text class="icon icon-ring"></text>
+      <view
+        class="item"
+        v-for="i in addressList"
+        :key="i.id"
+        @tap="selectAddress = i"
+      >
+        <view class="user">{{ i.receiver }} {{ i.contact }}</view>
+        <view class="address">{{ i.fullLocation }} {{ i.address }}</view>
+        <text
+          class="icon"
+          :class="{ 'icon-checked': selectAddress === i }"
+        ></text>
       </view>
     </view>
     <view class="footer">
       <view class="button primary"> 新建地址 </view>
-      <view v-if="false" class="button primary">确定</view>
+      <view
+        v-if="selectAddress"
+        class="button primary"
+        @tap="$emit('set', selectAddress)"
+        >确定</view
+      >
     </view>
   </view>
 </template>

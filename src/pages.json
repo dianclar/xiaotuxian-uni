@@ -55,7 +55,7 @@
       }
     },
     {
-      "path": "pages/cart/cart",
+      "path": "pages/cart/carts",
       "style": {
         "navigationBarTitleText": "购物车"
       }
@@ -128,6 +128,17 @@
           "path": "address/new",
           "style": {
             "navigationBarTitleText": "填写地址"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pagesOrder",
+      "pages": [
+        {
+          "path": "new",
+          "style": {
+            "navigationBarTitleText": "确认订单"
           }
         }
       ]

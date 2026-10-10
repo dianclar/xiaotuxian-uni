@@ -21,6 +21,7 @@ const requestdata = ref({
 })
 
 const getmore = () => {
+  if (!maxpage.value) return
   requestdata.value.page++
   if (requestdata.value.page > maxpage.value)
     return uni.showToast({
@@ -55,7 +56,7 @@ defineExpose({
       class="guess-item"
       v-for="item in list"
       :key="item.id"
-      :url="`/pages/goods/goods?id=4007498`"
+      :url="`/pages/goods/index?id=` + item.id"
     >
       <image
         class="image"

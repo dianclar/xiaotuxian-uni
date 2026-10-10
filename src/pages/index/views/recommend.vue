@@ -16,7 +16,7 @@ uni.setNavigationBarTitle({ title: item!.title })
 
 const data = ref<
   HotResult & {
-    subTypes: (HotResult['subTypes'][number] & { more: boolean })[] 
+    subTypes: (HotResult['subTypes'][number] & { more: boolean })[]
   }
 >()
 onLoad(() => {
@@ -86,7 +86,7 @@ const onlower = () => {
           class="navigator"
           v-for="goods in i.goodsItems.items"
           :key="goods.id"
-          :url="`/pages/goods/goods?id=${goods.id}`"
+          :url="`/pages/goods/index?id=${goods.id}`"
         >
           <image
             class="thumb"

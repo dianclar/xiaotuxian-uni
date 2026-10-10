@@ -211,6 +211,11 @@ const gotoPayment = () => {
           <view
             class="button payment-button"
             :class="{ disabled: !selectedCartListCount }"
+            @tap="
+              selectedCartListCount
+                ? uni.navigateTo({ url: '/pagesOrder/new' })
+                : uni.showToast({ title: '请选择商品', icon: 'none' })
+            "
           >
             去结算({{ selectedCartListCount }})
           </view>

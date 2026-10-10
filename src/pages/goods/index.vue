@@ -5,12 +5,26 @@ import { getGoodsByIdAPI, type GoodsResult } from '@/api/goods'
 import { postMemberCartAPI } from '@/api/cart'
 import AddressPanel from './components/AddressPanel.vue'
 import ServicePanel from './components/ServicePanel.vue'
+import { getMemberAddressAPI, type AddressItem } from '@/api/address'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 
 // const props = defineProps({
 //   id: String,
 // })
+
+const addressList = ref<AddressItem[]>()
+const address = ref()
+getMemberAddressAPI().then(res => {
+  addressList.value = res.result
+  address.value = res.result.find(item => item.isDefault === 1)
+})
+
+const add = computed(() => {
+  return address.value
+    ? address.value.fullLocation + ' ' + address.value.address
+    : '请选择收货地址'
+})
 
 const goods = ref<GoodsResult>()
 onLoad(async options => {
@@ -143,7 +157,9 @@ const addCart = async (ev: AnyObject) => {
           @tap="openPopup('address')"
         >
           <text class="label">送至</text>
-          <text class="text ellipsis"> 请选择收获地址 </text>
+          <text class="text ellipsis">
+            {{ add }}
+          </text>
         </view>
         <view
           class="item arrow"
@@ -254,6 +270,8 @@ const addCart = async (ev: AnyObject) => {
   >
     <AddressPanel
       v-if="popupName === 'address'"
+      :addressList="addressList"
+      @set=";(address = $event), popup?.close()"
       @close="popup?.close()"
     />
     <ServicePanel
@@ -268,6 +286,11 @@ const addCart = async (ev: AnyObject) => {
     :localdata="goodsInfo"
     :mode="skuMode"
     @add-cart="addCart"
+    @buy-now="
+      uni.navigateTo({
+        url: `/pagesOrder/new?skuId=${$event._id}&count=${$event.buy_num}&addressId=${address.id}`,
+      })
+    "
     add-cart-background-color="#FFA868"
     buy-now-background-color="#27BA9B"
   />
