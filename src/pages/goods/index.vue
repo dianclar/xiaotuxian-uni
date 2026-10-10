@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { getGoodsByIdAPI, type GoodsResult } from '@/api/goods'
+import { postMemberCartAPI } from '@/api/cart'
 import AddressPanel from './components/AddressPanel.vue'
 import ServicePanel from './components/ServicePanel.vue'
 // 获取屏幕边界到安全区域距离
@@ -76,6 +77,13 @@ const skuPopup = ref()
 const selectArrText = computed(() => {
   return skuPopup.value?.selectArr?.join(' ').trim() || '请选择商品规格'
 })
+
+// 加入购物车事件
+const addCart = async (ev: AnyObject) => {
+  await postMemberCartAPI({ skuId: ev._id, count: ev.buy_num })
+  uni.showToast({ title: '添加成功' })
+  skuKey.value = false
+}
 </script>
 
 <template>
@@ -259,6 +267,7 @@ const selectArrText = computed(() => {
     v-model="skuKey"
     :localdata="goodsInfo"
     :mode="skuMode"
+    @add-cart="addCart"
     add-cart-background-color="#FFA868"
     buy-now-background-color="#27BA9B"
   />
