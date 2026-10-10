@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getMemberAddressAPI ,deleteMemberAddressByIdAPI} from '@/api/address'
+import { getMemberAddressAPI, deleteMemberAddressByIdAPI } from '@/api/address'
 import type { AddressItem } from '@/types/address'
 import { onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
@@ -21,7 +21,7 @@ const onDeleteAddress = (id: string) => {
   // 二次确认
   uni.showModal({
     content: '删除地址?',
-    success: async (res) => {
+    success: async res => {
       if (res.confirm) {
         // 根据id删除收货地址
         await deleteMemberAddressByIdAPI(id)
@@ -67,7 +67,7 @@ const onDeleteAddress = (id: string) => {
               <navigator
                 class="edit"
                 hover-class="none"
-                :url="`/pagesMember/address-form/address-form?id=${item.id}`"
+                :url="`/pagesMember/address/new?id=${item.id}`"
               >
                 修改
               </navigator>

@@ -7,7 +7,7 @@ module.exports = {
 
   extends: [
     // 配置整体规则
-    'plugin:vue/vue3-essential' //  Vue3 规则,
+    'plugin:vue/vue3-essential', //  Vue3 规则,
     'eslint:recommended', //  ESLint 规则
     'prettier', // Prettier 规则
   ],
