@@ -5,6 +5,11 @@ import type { CategoryItem } from '@/types/home'
 defineProps<{
   list: CategoryItem[]
 }>()
+
+const goCategory = (item: CategoryItem) => {
+  getApp().globalData!.tabParams = { id: item.id }
+  uni.switchTab({ url: '/pages/category/category' })
+}
 </script>
 
 <template>
@@ -12,9 +17,10 @@ defineProps<{
     <navigator
       class="category-item"
       hover-class="none"
-      url="/pages/index/index"
+      url="/pages/category/category"
       v-for="item in list"
       :key="item.id"
+      @tap="goCategory(item)"
     >
       <image
         class="icon"

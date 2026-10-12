@@ -1,27 +1,34 @@
 <script setup lang="ts">
 import { getbanner, type BannerItem } from '@/api/home'
 import { ref } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
+import { onShow } from '@dcloudio/uni-app'
 import { getCategoryTop, type CategoryTopItem } from '@/api/category'
 import pageske from './components/pageske.vue'
 
-onLoad(() => {
-  getData()
+onShow(() => {
+  const params = getApp().globalData!.tabParams
+  if (params) {
+    getApp().globalData!.tabParams = null
+    getCategoryTopPro.then(() => {
+      activeIndex.value = categoryTop.value.findIndex(i => i.id === params.id)
+    })
+  }
 })
 
 const bannerList = ref<BannerItem[]>([])
 const categoryTop = ref<CategoryTopItem[]>([])
 const refresherstatus = ref(true)
-const getData = () => {
-  Promise.all([
-    getbanner({ distributionSite: 2 }).then(
-      res => (bannerList.value = res.result)
-    ),
-    getCategoryTop().then(res => (categoryTop.value = res.result)),
-  ]).then(() => {
-    refresherstatus.value = false
-  })
-}
+const getCategoryTopPro = getCategoryTop().then(
+  res => (categoryTop.value = res.result)
+)
+Promise.all([
+  getbanner({ distributionSite: 2 }).then(
+    res => (bannerList.value = res.result)
+  ),
+  getCategoryTopPro,
+]).then(() => {
+  refresherstatus.value = false
+})
 
 const activeIndex = ref(0)
 </script>

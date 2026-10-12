@@ -5,6 +5,8 @@ import {
   getMemberOrderPreAPI,
   type OrderPreResult,
   getMemberOrderPreNowAPI,
+  postMemberOrderAPI,
+  getMemberOrderRepurchaseByIdAPI,
 } from '@/api/order'
 import { useAddressStore } from '@/stores/index'
 
@@ -33,22 +35,42 @@ onLoad(d => {
       orderdata.value = res.result
       addressStore.changeSelectedAddress(res.result.userAddresses[0])
     })
-  else
-    getMemberOrderPreAPI().then(res => {
+  else if (d && d.orderId)
+    getMemberOrderRepurchaseByIdAPI(d.orderId).then(res => {
       orderdata.value = res.result
+      addressStore.changeSelectedAddress(
+        res.result.userAddresses.find(i => i.isDefault)
+      )
     })
+  else getMemberOrderPreAPI().then(res => (orderdata.value = res.result))
 })
 
 const orderdata = ref<OrderPreResult>()
 
 // 收货地址
 const addressStore = useAddressStore()
-const selecteAddress = computed(() => {
-  return (
-    addressStore.selectedAddress ||
-    orderdata.value?.userAddresses.find(v => v.isDefault)
-  )
-})
+
+// 提交订单
+const onOrderSubmit = async () => {
+  // 没有收货地址提醒
+  if (!addressStore.selectedAddress?.id) {
+    return uni.showToast({ icon: 'none', title: '请选择收货地址' })
+  }
+  // 发送请求
+  const res = await postMemberOrderAPI({
+    addressId: addressStore.selectedAddress?.id,
+    buyerMessage: buyerMessage.value,
+    deliveryTimeType: activeDelivery.value.type,
+    goods: orderdata.value!.goods.map(v => ({
+      count: v.count,
+      skuId: v.skuId,
+    })),
+    payChannel: 2,
+    payType: 1,
+  })
+  // 关闭当前页面，跳转到订单详情，传递订单id
+  uni.redirectTo({ url: `/pagesOrder/detail?id=${res.result.id}` })
+}
 </script>
 
 <template>
@@ -58,16 +80,18 @@ const selecteAddress = computed(() => {
   >
     <!-- 收货地址 -->
     <navigator
-      v-if="selecteAddress"
+      v-if="addressStore.selectedAddress"
       class="shipment"
       hover-class="none"
       url="/pagesMember/address/index?from=order"
     >
       <view class="user">
-        {{ selecteAddress.receiver }} {{ selecteAddress.contact }}
+        {{ addressStore.selectedAddress.receiver }}
+        {{ addressStore.selectedAddress.contact }}
       </view>
       <view class="address">
-        {{ selecteAddress.fullLocation }} {{ selecteAddress.address }}
+        {{ addressStore.selectedAddress.fullLocation }}
+        {{ addressStore.selectedAddress.address }}
       </view>
       <text class="icon icon-right"></text>
     </navigator>
@@ -158,7 +182,8 @@ const selecteAddress = computed(() => {
     </view>
     <view
       class="button"
-      :class="{ disabled: true }"
+      :class="{ disabled: !orderdata || !addressStore.selectedAddress?.id }"
+      @tap="onOrderSubmit"
     >
       提交订单
     </view>

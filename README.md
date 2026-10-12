@@ -16,11 +16,13 @@
 
 #### 命令行创建
 
-// cmd
+```
+# cmd
 npx degit dcloudio/uni-preset-vue#vite-ts _
 cd _
 pnpm i # 安装依赖
 pnpm run dev:mp-weixin # 编译小程序
+```
 
 小程序工具导入 dist 目录
 
@@ -32,131 +34,153 @@ uni-helper // uni 提示
 uniapp 小程序扩展
 
 // 配置
+
+```
+// .vscode\settings.json
 "files.associations": {
-"\*.json": "jsonc" // 允许注释
+    "\*.json": "jsonc" // 允许注释
 }
+```
+
+```
+# cmd
 npx prettier --write . --list-different # 格式化全部代码
+```
 
 ##### ts 适配
 
-// cmd
+```
+# cmd
 pnpm i -D @types/wechat-miniprogram @uni-helper/uni-app-types
 pnpm i -D @uni-helper/uni-ui-types
+```
 
+```
 // tsconfig.json
 "types": [
-"@dcloudio/types",
-"@types/wechat-miniprogram",
-"@uni-helper/uni-app-types",
-"@uni-helper/uni-ui-types"
+    "@dcloudio/types",
+    "@types/wechat-miniprogram",
+    "@uni-helper/uni-app-types",
+    "@uni-helper/uni-ui-types"
 ]
+```
 
 ### 目录结构
 
+```
 uniapp
-├pages 页面文件目录
-├static 静态资源目录
-├unpackage 编译资源目录
-├App.vue vue 根文件
-├index.html 挂载文件
-├main.js 入口文件
-├manifest.json 打包配置文件
-├pages.json 页面配置文件
-├uni.promisify.adaptor.js
-└uni.scss 常用变量样式
+    ├pages 页面文件目录
+    ├static 静态资源目录
+    ├unpackage 编译资源目录
+    ├App.vue vue 根文件
+    ├index.html 挂载文件
+    ├main.js 入口文件
+    ├manifest.json 打包配置文件
+    ├pages.json 页面配置文件
+    ├uni.promisify.adaptor.js
+    └uni.scss 常用变量样式
+```
 
 ### pages.json 配置
 
+```
 {
-"pages": [ // 路由及页面配置，第一个路由为入口
-{
-"path": "页面路径",
-"style": {
-"navigationStyle": "导航栏显隐",
-"navigationBarTextStyle": "状态栏颜色",
-"navigationBarTitleText": "标题内容"
+    "pages": [ // 路由及页面配置，第一个路由为入口
+        {
+            "path": "页面路径",
+            "style": {
+                "navigationStyle": "导航栏显隐",
+                "navigationBarTextStyle": "状态栏颜色",
+                "navigationBarTitleText": "标题内容"
+            }
+        }
+    ],
+    "tabBar": { // 底栏配置，路径需在 pages 注册，至少需要俩个
+        "selectedColor": "选中标题颜色",
+            {
+                "pagePath": "底栏路径",
+                "text": "底栏标题"
+                "iconPath": "图标"
+                "selectedIconPath": "选中图标"
+            }
+    },
+    "subPackages": [ // 子包配置
+    {
+        "root": "子包根目录",
+        "pages": [ // 子包页面配置
+            {
+                "path": "子包页面路径",
+                "style": {
+                    ...
+                }
+            }
+        ]
+    },
+    "preloadRule": { // 子包预加载配置
+        "触发开始加载页面": {
+            network: "预加载网络",
+            packages: ["预加载子包根目录"]
+        }
+    }
+  ],
+    "globalStyle": { // 默认配置
+        "navigationBarTextStyle": "标题颜色",
+        "navigationBarTitleText": "标题内容",
+        "navigationBarBackgroundColor": "标题背景",
+        "backgroundColor": "背景颜色"
+    },
+    "uniIdRouter": {} // uniid 路由
 }
-}
-],  
-"tabBar": { // 底栏配置，路径需在 pages 注册，至少需要俩个
-"selectedColor": "选中标题颜色",
-{
-"pagePath": "底栏路径",
-"text": "底栏标题"
-"iconPath": "图标"
-"selectedIconPath": "选中图标"
-}
-},
-"globalStyle": { // 默认配置
-"navigationBarTextStyle": "标题颜色",
-"navigationBarTitleText": "标题内容",
-"navigationBarBackgroundColor": "标题背景",
-"backgroundColor": "背景颜色"
-},
-"uniIdRouter": {} // uniid 路由
-}
+```
 
 ### 配置组件库
 
+```
 // cmd
 pnpm i @dcloudio/uni-ui
+```
 
+```
 // pages.json
 "easycom": {
-"autoscan": true,
-"custom": {
-"^uni-(.\*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue" // 自动引入组件规则
-}
+    "autoscan": true,
+    "custom": {
+        "^uni-(.\*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue" // 自动引入组件规则
+    }
 },
+```
 
 ### pinia 持久化
 
+```
 // stores
 persist: {
-storage: {
-getItem(key) {
-return uni.getStorageSync(key)
+    storage: {
+        getItem(key) {
+            return uni.getStorageSync(key)
+        },
+        setItem(key, value) {
+            uni.setStorageSync(key, value)
+        },
+    },
 },
-setItem(key, value) {
-uni.setStorageSync(key, value)
-},
-},
-},
+```
 
 ### 分包
 
 将资源分为多个包，减少首屏加载时间，预下载分包可提升进入分包页面的速度
-
-#### 配置分包
-
-// pages.json
-"subPackages": [
-{
-"root": "分包路径",
-"pages": [
-"分包页面"
-]
-}
-]
-
-#### 配置预下载
-
-// pages.json
-"preloadRule": {
-"分包页面": {
-network: "all",
-packages: ["分包路径"]
-}
-}
+配置分包参考上方 pages.json 配置 说明的 subPackages、preloadRule
 
 ### uni 小技能
 
 #### 小程序大图查看
 
+```
 uni.previewImage({
-urls: [] // 所有大图
-current: url // 当前大图
+    urls: [] // 所有大图
+    current: url // 当前大图
 })
+```
 
 #### 获取安全区域
 
@@ -175,8 +199,9 @@ pages.json 里注册的页面的 defineProps 方法也可以接受 url 参数
 
 uni.login()
 
+<button
 open-type="getPhoneNumber"
-@getphonenumber="onGetPhoneNumber"
+@getphonenumber="onGetPhoneNumber" />
 
 #### 获取图片
 
@@ -184,22 +209,56 @@ uni.chooseMedia()
 
 #### 动态标题
 
+```
 uni.setNavigationBarTitle({
-title: "标题"
+    title: "标题"
 })
+```
 
 #### 滚动容器
 
-scroll-view
+<scroll-view
 scroll-y // 允许纵向滚动
 scroll-x // 允许横向滚动
 refresher-enabled // 开启下拉刷新
 :refresher-triggered="" // 下拉刷新状态
 @scrolltolower="" // 滚动到底部时
-@refresherrefresh="" // 下拉刷新时
+@refresherrefresh="" // 下拉刷新时 />
 
 #### 侧滑菜单
 
 uni-swipe-action
-uni-swipe-action-item 
+uni-swipe-action-item
 template #right // 侧滑菜单内容
+
+#### 获取页面栈
+
+getCurrentPages()
+
+#### 滚动动画
+
+```
+this.animate(
+    'css选择器',
+    [{}, // 初始css样式
+     {}], // 结束css样式
+    动画时长,
+    {
+      scrollSource: '滚动容器css选择器',
+      timeRange: 时长倍率,
+      startScrollOffset: 开始滚动位置,
+      endScrollOffset: 结束滚动位置,
+    }
+  )
+```
+
+#### 倒计时组件
+
+```
+<uni-countdown
+    :second="秒数"
+    :show-day="显示天"
+    :show-colon="显示冒号"
+    @timeup="完成时"
+/>
+```
