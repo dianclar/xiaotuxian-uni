@@ -1,6 +1,23 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { getsearch } from '@/api/home'
 // 获取安全区域
 const { safeAreaInsets } = uni.getSystemInfoSync()
+
+const search = ref('')
+const page = {
+  page: 1,
+  pageSize: 10,
+}
+
+const goSearch = async () => {
+  const query = {
+    ...page,
+    keyword: search.value,
+  }
+  const { result } = await getsearch(query)
+  console.log(result)
+}
 </script>
 
 <template>
@@ -18,7 +35,11 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
     </view>
     <!-- 搜索条 -->
     <view class="search">
-      <text class="icon-search">搜索商品</text>
+      <input
+        placeholder="搜索商品"
+        v-model="search"
+        @blur="goSearch"
+      />
       <text class="icon-scan"></text>
     </view>
   </view>

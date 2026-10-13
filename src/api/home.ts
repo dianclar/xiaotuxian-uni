@@ -1,4 +1,4 @@
-import { type PageResult, get, post } from '@/utils/request'
+import { type PageResult, type Page, get, post } from '@/utils/request'
 import type { BannerItem, CategoryItem, HotItem, GuessItem } from '@/types/home'
 export type * from '@/types/home'
 
@@ -20,4 +20,9 @@ export const gethot = () => {
 // 获取信息流
 export const getinfomore = (d?: { page: number; pageSize: number }) => {
   return get<PageResult<GuessItem>>('/home/goods/guessLike', d)
+}
+
+// 搜索
+export const getsearch = (d?: Page<{ keyword: string }>) => {
+  return post('/search/all', d)
 }
