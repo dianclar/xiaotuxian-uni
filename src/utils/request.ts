@@ -75,6 +75,7 @@ export type PageResult<T> = {
   /** 每页条数 */
   pageSize: number
 }
+export type Page<T> = { page: number; pageSize: number } & T
 
 export const get = <T>(url: string, data?: any) => {
   return request({

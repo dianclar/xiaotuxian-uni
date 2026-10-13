@@ -262,3 +262,7 @@ this.animate(
     @timeup="完成时"
 />
 ```
+
+#### 复制
+
+uni.setClipboardData({ data: "内容" })

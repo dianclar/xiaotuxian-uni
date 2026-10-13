@@ -153,6 +153,12 @@
           "style": {
             "navigationBarTitleText": "订单详情"
           }
+        },
+        {
+          "path": "list",
+          "style": {
+            "navigationBarTitleText": "订单列表"
+          }
         }
       ]
     }
