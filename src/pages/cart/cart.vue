@@ -3,7 +3,7 @@ import cart from '@/components/CartMain.vue'
 </script>
 
 <template>
-  <cart />
+  <cart class="root" />
 </template>
 
 <style lang="scss">

@@ -1,0 +1,16 @@
+body {
+  uni-image {
+    width: 100%;
+    height: 100%;
+  }
+  uni-navigator {
+    a {
+      all: inherit;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background: none;
+	  position: initial;
+    }
+  }
+}

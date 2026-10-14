@@ -111,7 +111,7 @@ page {
 }
 
 // 订单列表
-.orders {
+::v-deep .orders {
   .card {
     min-height: 100rpx;
     padding: 20rpx;

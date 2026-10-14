@@ -260,7 +260,8 @@
   </view>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import './index.scss';
 .sk-transparent {
   color: transparent !important;
 }

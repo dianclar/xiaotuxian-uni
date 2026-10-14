@@ -10,3 +10,7 @@ export const postLoginWxMinAPI = (d: Record<string, any>) => {
 export const postLoginWxMinSimpleAPI  = (d: Record<string, any>) => {
   return post<LoginResult>('/login/wxMin/simple', d)
 }
+// 密码登陆
+export const postLoginPwdAPI = (d: Record<string, any>) => {
+  return post<LoginResult>('/login', d)
+}

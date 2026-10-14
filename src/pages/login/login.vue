@@ -1,14 +1,19 @@
-
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app'
-import { postLoginWxMinAPI, postLoginWxMinSimpleAPI } from '@/api/login'
+import {
+  postLoginWxMinAPI,
+  postLoginWxMinSimpleAPI,
+  postLoginPwdAPI,
+} from '@/api/login'
 import { useMemberStore } from '@/stores'
+import { ref } from 'vue'
 
 let code = ''
 onLoad(async options => {
   const unilogin = await uni.login()
   code = unilogin.code
 })
+
 const onGetPhoneNumber = async (e: any) => {
   if (e.detail.errMsg === 'getPhoneNumber:ok') {
     console.log('手机号授权成功', e.detail)
@@ -27,6 +32,16 @@ const onSimulateLogin = async () => {
   const res = await postLoginWxMinSimpleAPI({ phoneNumber: '16666666666' })
   login(res)
 }
+
+const loginForm = ref({
+  account: '',
+  password: '',
+})
+const onLogin = async () => {
+  const res = await postLoginPwdAPI(loginForm.value)
+  login(res)
+}
+
 const login = (res: any) => {
   const memberStore = useMemberStore()
   memberStore.setProfile(res.result)
@@ -49,11 +64,30 @@ const login = (res: any) => {
     </view>
     <view class="login">
       <!-- 网页端表单登录 -->
-      <!-- <input class="input" type="text" placeholder="请输入用户名/手机号码" /> -->
-      <!-- <input class="input" type="text" password placeholder="请输入密码" /> -->
-      <!-- <button class="button phone">登录</button> -->
+      <!-- #ifdef WEB -->
+      <input
+        class="input"
+        type="text"
+        placeholder="请输入用户名/手机号码"
+        v-model="loginForm.account"
+      />
+      <input
+        class="input"
+        type="text"
+        password
+        placeholder="请输入密码"
+        v-model="loginForm.password"
+      />
+      <button
+        class="button phone"
+        @tap="onLogin"
+      >
+        登录
+      </button>
+      <!-- #endif -->
 
       <!-- 小程序端授权登录 -->
+      <!-- #ifdef MP-WEIXIN -->
       <button
         class="button phone"
         open-type="getPhoneNumber"
@@ -73,6 +107,8 @@ const login = (res: any) => {
           </button>
         </view>
       </view>
+      <!-- #endif -->
+
       <view class="tips"
         >登录/注册即视为你同意《服务条款》和《小兔鲜儿隐私协议》</view
       >

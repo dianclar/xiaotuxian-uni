@@ -69,8 +69,8 @@ const getdata = async () => {
       <!-- 推荐> -->
       <HotPanel :list="hotList" />
       <!-- 信息流 -->
+      <xtx-guess ref="guessRef" />
     </template>
-    <xtx-guess ref="guessRef" />
   </scroll-view>
 </template>
 

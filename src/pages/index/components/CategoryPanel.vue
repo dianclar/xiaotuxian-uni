@@ -40,7 +40,7 @@ const goCategory = (item: CategoryItem) => {
   flex-wrap: wrap;
   min-height: 328rpx;
 
-  .category-item {
+  .category-item{
     width: 150rpx;
     display: flex;
     justify-content: center;

@@ -52,6 +52,10 @@ const this_ = pages.at(-1) as any
 
 // 页面渲染完毕，绑定动画效果
 onReady(() => {
+  // #ifdef WEB
+  ;(document!.querySelector('.navbar') as HTMLElement).style.display = 'none'
+  // #endif
+  // #ifdef MP-WEIXIN
   // 动画效果,导航栏背景色
   this_.animate(
     '.navbar', // 选择器
@@ -83,6 +87,7 @@ onReady(() => {
     startScrollOffset: 0,
     endScrollOffset: 50,
   })
+  // #endif
 })
 
 // 获取订单详情
@@ -249,7 +254,9 @@ const onOrderCancel = async () => {
         <!-- 其他订单状态:展示再次购买按钮 -->
         <template v-else>
           <!-- 订单状态文字 -->
-          <view class="status"> {{ orderStateList[order!.orderState] }} </view>
+          <view class="status">
+            {{ orderStateList[order?.orderState || 0] }}
+          </view>
           <view class="button-group">
             <navigator
               class="button"

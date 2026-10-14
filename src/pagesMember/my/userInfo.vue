@@ -20,6 +20,7 @@ onLoad(() => {
 })
 
 const onAvatarChange = () => {
+  // #ifdef MP-WEIXIN
   // 调用拍照/选择图片
   uni.chooseMedia({
     // 文件个数
@@ -29,6 +30,17 @@ const onAvatarChange = () => {
     success: res => {
       // 本地路径
       const { tempFilePath } = res.tempFiles[0]
+      // #endif
+      // #ifdef nodev
+    },
+  })
+  // #endif
+  // #ifdef APP || H5
+  uni.chooseImage({
+    count: 1,
+    success: res => {
+      const tempFilePath = res.tempFilePaths[0]
+      // #endif
       // 文件上传
       uni.uploadFile({
         url: '/member/profile/avatar',

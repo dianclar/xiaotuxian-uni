@@ -166,10 +166,51 @@ persist: {
 },
 ```
 
+### 差异开发
+
+```
+// js
+// #ifdef MP-WEIXIN || WEB || APP
+// #endif
+<!-- template -->
+<!-- #ifdef 平台 -->
+<!-- #endif -->
+```
+
+小程序不支持\*选择器
+WEB 默认 scoped
+
 ### 分包
 
 将资源分为多个包，减少首屏加载时间，预下载分包可提升进入分包页面的速度
 配置分包参考上方 pages.json 配置 说明的 subPackages、preloadRule
+
+### 打包项目
+
+```
+# cmd
+npx @dcloudio/uvm *.*.* # 生成 uvm 依赖配置文件为指定版本，慎用
+pnpm build:mp-weixin # 微信小程序
+pnpm build:h5 # 浏览器
+```
+
+```
+// manifest.json
+"h5": {
+    "router": {
+        "base": "./" // 配置打包路径
+    }
+},
+```
+
+微信开发者工具上传 => 微信公众平台审核发布选择版本
+APP 端 使用 HBuilderX 打包
+
+### uniCloud
+
+通过 js 开发服务端，提供云数据库等功能
+登陆 uniCloud => 认证身份 => 建立服务空间 => 云数据库创建表
+HBuilderX 根目录创建 uniCloud => 关联服务空间 => database 下载表结构 DB Schema 
 
 ### uni 小技能
 
@@ -188,7 +229,8 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
 
 #### 获取骨架屏
 
-导航栏=>页面信息=>生成骨架屏
+开发工具导航栏=>页面信息=>生成骨架屏
+web 和 app 需要引入样式
 
 #### 页面传参
 
@@ -235,7 +277,7 @@ template #right // 侧滑菜单内容
 
 getCurrentPages()
 
-#### 滚动动画
+#### 微信小程序滚动动画
 
 ```
 this.animate(

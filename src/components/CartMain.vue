@@ -251,6 +251,13 @@ const gotoPayment = () => {
   overflow: hidden;
   background-color: #f7f7f8;
 }
+.root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #f7f7f8;
+}
 
 // 滚动容器
 .scroll-view {
@@ -288,7 +295,7 @@ const gotoPayment = () => {
     background-color: #fff;
     position: relative;
 
-    .navigator {
+    .navigator{
       display: flex;
     }
 
