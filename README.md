@@ -84,6 +84,7 @@ uniapp
 ### pages.json 配置
 
 ```
+// pages.json
 {
     "pages": [ // 路由及页面配置，第一个路由为入口
         {
@@ -172,6 +173,7 @@ persist: {
 // js
 // #ifdef MP-WEIXIN || WEB || APP
 // #endif
+
 <!-- template -->
 <!-- #ifdef 平台 -->
 <!-- #endif -->
@@ -210,7 +212,7 @@ APP 端 使用 HBuilderX 打包
 
 通过 js 开发服务端，提供云数据库等功能
 登陆 uniCloud => 认证身份 => 建立服务空间 => 云数据库创建表
-HBuilderX 根目录创建 uniCloud => 关联服务空间 => database 下载表结构 DB Schema 
+HBuilderX 根目录创建 uniCloud => 关联服务空间 => database 下载表结构 DB Schema
 
 ### uni 小技能
 
@@ -225,7 +227,10 @@ uni.previewImage({
 
 #### 获取安全区域
 
+```
+// js
 const { safeAreaInsets } = uni.getSystemInfoSync()
+```
 
 #### 获取骨架屏
 
@@ -239,7 +244,10 @@ pages.json 里注册的页面的 defineProps 方法也可以接受 url 参数
 
 #### 获取手机号
 
+```
+// js
 uni.login()
+```
 
 <button
 open-type="getPhoneNumber"
@@ -247,11 +255,15 @@ open-type="getPhoneNumber"
 
 #### 获取图片
 
+```
+// js
 uni.chooseMedia()
+```
 
 #### 动态标题
 
 ```
+// js
 uni.setNavigationBarTitle({
     title: "标题"
 })
@@ -259,27 +271,37 @@ uni.setNavigationBarTitle({
 
 #### 滚动容器
 
+```
+<!-- html -->
 <scroll-view
-scroll-y // 允许纵向滚动
-scroll-x // 允许横向滚动
-refresher-enabled // 开启下拉刷新
-:refresher-triggered="" // 下拉刷新状态
-@scrolltolower="" // 滚动到底部时
-@refresherrefresh="" // 下拉刷新时 />
+    scroll-y // 允许纵向滚动
+    scroll-x // 允许横向滚动
+    refresher-enabled // 开启下拉刷新
+    :refresher-triggered="" // 下拉刷新状态
+    @scrolltolower="" // 滚动到底部时
+    @refresherrefresh="" // 下拉刷新时 />
+```
 
 #### 侧滑菜单
 
-uni-swipe-action
-uni-swipe-action-item
-template #right // 侧滑菜单内容
+```
+<!-- html -->
+<uni-swipe-action />
+<uni-swipe-action-item />
+<template #right /> // 侧滑菜单内容
+```
 
 #### 获取页面栈
 
+```
+// js
 getCurrentPages()
+```
 
 #### 微信小程序滚动动画
 
 ```
+// js
 this.animate(
     'css选择器',
     [{}, // 初始css样式
@@ -297,6 +319,7 @@ this.animate(
 #### 倒计时组件
 
 ```
+<!-- html -->
 <uni-countdown
     :second="秒数"
     :show-day="显示天"
@@ -307,4 +330,7 @@ this.animate(
 
 #### 复制
 
+```
+// js
 uni.setClipboardData({ data: "内容" })
+```
