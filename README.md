@@ -2,11 +2,9 @@
 
 小兔鲜项目，由 uniapp 开发，主要为学习用途
 
-## 开始
+# 创建项目
 
-### 创建项目
-
-#### hbuilder 创建
+## hbuilder 创建
 
 选择默认模板和 vue3
 小程序工具需开启服务端口
@@ -14,7 +12,7 @@
 可选择编译模式
 手机调试需 id
 
-#### 命令行创建
+## 命令行创建
 
 ```
 # cmd
@@ -26,7 +24,7 @@ pnpm run dev:mp-weixin # 编译小程序
 
 小程序工具导入 dist 目录
 
-##### vscode 适配
+### vscode 适配
 
 // 插件
 uni-create-view // 创建页面
@@ -47,7 +45,7 @@ uniapp 小程序扩展
 npx prettier --write . --list-different # 格式化全部代码
 ```
 
-##### ts 适配
+### ts 适配
 
 ```
 # cmd
@@ -65,7 +63,7 @@ pnpm i -D @uni-helper/uni-ui-types
 ]
 ```
 
-### 目录结构
+# 目录结构
 
 ```
 uniapp
@@ -81,7 +79,7 @@ uniapp
     └uni.scss 常用变量样式
 ```
 
-### pages.json 配置
+# pages.json 配置
 
 ```
 // pages.json
@@ -134,7 +132,7 @@ uniapp
 }
 ```
 
-### 配置组件库
+# 配置组件库
 
 ```
 // cmd
@@ -151,7 +149,7 @@ pnpm i @dcloudio/uni-ui
 },
 ```
 
-### pinia 持久化
+# pinia 持久化
 
 ```
 // stores
@@ -167,7 +165,7 @@ persist: {
 },
 ```
 
-### 差异开发
+# 差异开发
 
 ```
 // js
@@ -182,12 +180,12 @@ persist: {
 小程序不支持\*选择器
 WEB 默认 scoped
 
-### 分包
+# 分包
 
 将资源分为多个包，减少首屏加载时间，预下载分包可提升进入分包页面的速度
 配置分包参考上方 pages.json 配置 说明的 subPackages、preloadRule
 
-### 打包项目
+# 打包项目
 
 ```
 # cmd
@@ -208,15 +206,15 @@ pnpm build:h5 # 浏览器
 微信开发者工具上传 => 微信公众平台审核发布选择版本
 APP 端 使用 HBuilderX 打包
 
-### uniCloud
+# uniCloud
 
 通过 js 开发服务端，提供云数据库等功能
 登陆 uniCloud => 认证身份 => 建立服务空间 => 云数据库创建表
 HBuilderX 根目录创建 uniCloud => 关联服务空间 => database 下载表结构 DB Schema
 
-### uni 小技能
+# uni 小技能
 
-#### 小程序大图查看
+## 小程序大图查看
 
 ```
 uni.previewImage({
@@ -225,24 +223,24 @@ uni.previewImage({
 })
 ```
 
-#### 获取安全区域
+## 获取安全区域
 
 ```
 // js
 const { safeAreaInsets } = uni.getSystemInfoSync()
 ```
 
-#### 获取骨架屏
+## 获取骨架屏
 
 开发工具导航栏=>页面信息=>生成骨架屏
 web 和 app 需要引入样式
 
-#### 页面传参
+## 页面传参
 
 onLoad 方法可以接受 url 参数，pages.json 里注册的页面才有 onLoad 方法
 pages.json 里注册的页面的 defineProps 方法也可以接受 url 参数
 
-#### 获取手机号
+## 获取手机号
 
 ```
 // js
@@ -253,14 +251,14 @@ uni.login()
 open-type="getPhoneNumber"
 @getphonenumber="onGetPhoneNumber" />
 
-#### 获取图片
+## 获取图片
 
 ```
 // js
 uni.chooseMedia()
 ```
 
-#### 动态标题
+## 动态标题
 
 ```
 // js
@@ -269,7 +267,7 @@ uni.setNavigationBarTitle({
 })
 ```
 
-#### 滚动容器
+## 滚动容器
 
 ```
 <!-- html -->
@@ -282,7 +280,7 @@ uni.setNavigationBarTitle({
     @refresherrefresh="" // 下拉刷新时 />
 ```
 
-#### 侧滑菜单
+## 侧滑菜单
 
 ```
 <!-- html -->
@@ -291,14 +289,14 @@ uni.setNavigationBarTitle({
 <template #right /> // 侧滑菜单内容
 ```
 
-#### 获取页面栈
+## 获取页面栈
 
 ```
 // js
 getCurrentPages()
 ```
 
-#### 微信小程序滚动动画
+## 微信小程序滚动动画
 
 ```
 // js
@@ -316,7 +314,7 @@ this.animate(
   )
 ```
 
-#### 倒计时组件
+## 倒计时组件
 
 ```
 <!-- html -->
@@ -328,7 +326,7 @@ this.animate(
 />
 ```
 
-#### 复制
+## 复制
 
 ```
 // js
