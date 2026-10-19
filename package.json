@@ -40,7 +40,8 @@
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
     "tsc": "vue-tsc --noEmit --skipLibCheck",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "eslint": "eslint . ",
+    "eslint:fix": "eslint . --fix",
     "prepare": "husky install",
     "lint-staged": "lint-staged"
   },
